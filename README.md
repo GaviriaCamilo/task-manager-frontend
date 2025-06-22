@@ -71,6 +71,27 @@ npm run dev
 
 El frontend estará disponible en `http://localhost:5173`.
 
+## 🎨 Capturas de Pantalla
+
+Aquí puedes ver algunas capturas de pantalla de la aplicación en funcionamiento:
+
+### Vista de Escritorio (Desktop)
+
+* **Página Principal (Listado de Tareas):**
+    ![Pantalla Principal Escritorio](screenshots/homedesktop.png)
+
+    * **Página "About":**
+    ![Pantalla About Escritorio](screenshots/aboutdesktop.png)
+
+### Vista Móvil (Mobile)
+
+* **Página Principal (Listado de Tareas en móvil):**
+    ![Pantalla Principal Móvil](screenshots/homemobile.png)
+
+* **Página "About" (en móvil):**
+    ![Pantalla About Móvil](screenshots/aboutmobile.png)
+
+
 > **Importante**: Asegúrate de que el backend esté funcionando antes de intentar acceder al frontend, ya que este último depende completamente de la API para obtener y gestionar las tareas.
 
 ## 📁 Estructura del Proyecto
