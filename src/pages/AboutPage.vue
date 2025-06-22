@@ -26,25 +26,28 @@
         <section>
           <h3 class="text-base sm:text-lg font-semibold text-blue-600 mb-1">Sobre mí</h3>
           <p>
-            Analista y Desarrollador de Software con experiencia en desarrollo Frontend y Backend. Apasionado por el aprendizaje continuo, la resolución de problemas y la adaptación a nuevas tecnologías. Disfruto del trabajo en equipo y los desafíos técnicos. Tengo muchas ganas de aportar mis conocimientos en una empresa y desde hace mucho tiempo me gusta el desarrollo de software. Espero que me den una oportunidad para demostrar mi compromiso y capacidades. Busco seguir creciendo profesionalmente y aportar con mis conocimientos.
+            Soy un Analista y Desarrollador de Software Full Stack con experiencia en tecnologías modernas como Vue.js, Laravel, y bases de datos relacionales. Me especializo en el desarrollo de aplicaciones web completas, desde la interfaz de usuario hasta la arquitectura del backend. Disfruto creando soluciones eficientes y escalables, trabajando con APIs RESTful, y implementando las mejores prácticas de desarrollo. Mi pasión por la tecnología me impulsa a mantenerme actualizado con las últimas tendencias y herramientas del desarrollo web.
           </p>
         </section>
         <section>
           <h3 class="text-base sm:text-lg font-semibold text-blue-600 mb-1">Sobre este proyecto</h3>
           <p>
-            Este es un Task Manager simple desarrollado como prueba técnica. Permite crear, listar, completar y eliminar tareas usando Vue 3 en el frontend y Laravel en el backend, conectados a una base de datos MySQL. El objetivo es demostrar buenas prácticas de desarrollo, integración de API REST y una interfaz clara y funcional.
+            Este Task Manager es una Single Page Application (SPA) desarrollada con Vue 3 y Vite que demuestra mis habilidades en el desarrollo frontend moderno. La aplicación incluye funcionalidades completas de CRUD, búsqueda en tiempo real, paginación, exportación a PDF, y diseño responsive con Tailwind CSS. Se conecta con una API RESTful desarrollada en Laravel, mostrando mi capacidad para integrar frontend y backend de manera eficiente. El proyecto implementa componentes reutilizables, manejo de estados, y una arquitectura escalable.
           </p>
         </section>
         <section>
           <h3 class="text-base sm:text-lg font-semibold text-blue-600 mb-1">Tecnologías y habilidades</h3>
           <p>
-            HTML, CSS, JavaScript, Vue.js, Tailwind CSS, Bootstrap, PHP, Laravel, Python, Flask, SQL, Postman, Git/GitHub, API REST, despliegues, trabajo en equipo, comunicación, resolución de problemas y aprendizaje continuo.
+            <strong>Frontend:</strong> Vue 3, JavaScript ES6+, Vite, Tailwind CSS, Vue Router, Axios, HTML5, CSS3, Responsive Design.
+            <strong>Backend:</strong> Laravel, PHP, API RESTful, MySQL, Eloquent ORM.
+            <strong>Herramientas:</strong> Git/GitHub, NPM, Composer, Postman, VS Code.
+            <strong>Metodologías:</strong> Desarrollo ágil, componentes reutilizables, arquitectura SPA, integración de APIs, manejo de estados, debugging y testing.
           </p>
         </section>
         <section>
           <h3 class="text-base sm:text-lg font-semibold text-blue-600 mb-1">Educación</h3>
           <p>
-            Tecnólogo en Análisis y Desarrollo de Software (SENA), cursos en desarrollo web, bases de datos, ventas y bootcamps de programación.
+            Tecnólogo en Análisis y Desarrollo de Software (SENA), con formación especializada en desarrollo web full stack, bases de datos relacionales, programación orientada a objetos, y arquitectura de software. Complemento mi formación con cursos especializados en Vue.js, Laravel, y desarrollo de APIs modernas.
           </p>
         </section>
       </div>
