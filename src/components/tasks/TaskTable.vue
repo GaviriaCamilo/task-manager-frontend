@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- Vista Desktop: Tabla -->
-    <div class="hidden lg:block mb-40">
+    <div class="hidden lg:block mb-2">
       <div class="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-100">
         <table class="min-w-full table-auto">
           <thead>
@@ -23,49 +22,26 @@
                 </span>
               </td>
               <td class="py-4 px-6">
-                <div class="text-sm font-medium text-gray-900 leading-5 break-words">
-                  <template v-if="task.title.length <= 35">
-                    {{ task.title }}
-                  </template>
-                  <template v-else>
-                    <div v-if="!expandedTitles[task.id]">
-                      <span>{{ task.title.substring(0, 20) }}...</span>
-                      <button @click="toggleTitle(task.id)" class="ml-1 text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap">
-                        Ver más
-                      </button>
-                    </div>
-                    <div v-else>
-                      <div class="mb-1">{{ task.title }}</div>
-                      <button @click="toggleTitle(task.id)" class="text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap">
-                        Ver menos
-                      </button>
-                    </div>
-                  </template>
-                </div>
+                <ExpandableText
+                  :text="task.title"
+                  :limit="35"
+                  :truncatedLength="20"
+                  textClass="text-sm font-medium text-gray-900 leading-5"
+                  buttonClass="ml-1 text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap"
+                  label="título"
+                  :iconHidden="true"
+                />
               </td>
               <td class="py-4 px-6">
-                <div class="text-sm text-gray-600" :class="expandedDescriptions[task.id] ? 'max-w-sm' : 'max-w-xs'">
-                  <template v-if="task.description">
-                    <div v-if="task.description.length <= 100" class="break-words">
-                      {{ task.description }}
-                    </div>
-                    <div v-else class="break-words">
-                      <div v-if="!expandedDescriptions[task.id]">
-                        <span>{{ task.description.substring(0, 100) }}...</span>
-                        <button @click="toggleDescription(task.id)" class="ml-1 text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap">
-                          Ver más
-                        </button>
-                      </div>
-                      <div v-else>
-                        <div class="mb-1">{{ task.description }}</div>
-                        <button @click="toggleDescription(task.id)" class="text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap">
-                          Ver menos
-                        </button>
-                      </div>
-                    </div>
-                  </template>
-                  <span v-else class="text-gray-400 italic">Sin descripción</span>
-                </div>
+                <ExpandableText
+                  :text="task.description"
+                  :limit="100"
+                  :truncatedLength="100"
+                  textClass="text-sm text-gray-600"
+                  buttonClass="ml-1 text-indigo-600 hover:text-indigo-800 font-medium text-xs underline whitespace-nowrap"
+                  label="descripción"
+                  :iconHidden="true"
+                />
               </td>
               <td class="py-4 px-6 text-center">
                 <label class="relative inline-flex items-center cursor-pointer">
@@ -116,12 +92,10 @@
       </div>
     </div>
 
-    <!-- Vista Mobile/Tablet: Cards -->
-    <div class="lg:hidden mb-30">
+    <div class="lg:hidden mb-2">
       <div class="space-y-4">
         <div v-for="task in tasks" :key="task.id" class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
           <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-4">
-  
             <div class="flex items-center justify-between mb-3">
               <span class="inline-flex items-center justify-center w-8 h-8 bg-white bg-opacity-20 text-indigo-800 rounded-full font-bold text-sm">
                 {{ task.id }}
@@ -137,42 +111,28 @@
             </div>
             
             <div class="w-full">
-              <h3 class="text-white font-semibold text-base leading-5 break-words" :title="task.title">
-                {{ task.title }}
-              </h3>
+              <ExpandableText
+                :text="task.title"
+                :limit="40"
+                :truncatedLength="30"
+                textClass="text-white font-semibold text-base leading-5"
+                buttonClass="ml-1 text-white text-opacity-80 hover:text-opacity-100 font-medium text-sm underline whitespace-nowrap"
+                label="título"
+                :iconHidden="true"
+              />
             </div>
           </div>
 
           <div class="p-4">
             <div class="mb-4">
-              <template v-if="task.description">
-                <div v-if="task.description.length <= 150" class="text-gray-600 text-sm leading-relaxed">
-                  {{ task.description }}
-                </div>
-                <div v-else class="text-gray-600 text-sm leading-relaxed">
-                  <div v-if="!expandedDescriptions[task.id]">
-                    <p class="mb-2">{{ task.description.substring(0, 150) }}...</p>
-                    <button @click="toggleDescription(task.id)" class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors duration-200">
-                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                      Ver más
-                    </button>
-                  </div>
-                  <div v-else>
-                    <p class="mb-2">{{ task.description }}</p>
-                    <button @click="toggleDescription(task.id)" class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors duration-200">
-                      <svg class="w-4 h-4 mr-1 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                      </svg>
-                      Ver menos
-                    </button>
-                  </div>
-                </div>
-              </template>
-              <p v-else class="text-gray-400 text-sm leading-relaxed italic">
-                Sin descripción
-              </p>
+              <ExpandableText
+                :text="task.description"
+                :limit="150"
+                :truncatedLength="150"
+                textClass="text-gray-600 text-sm leading-relaxed"
+                buttonClass="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors duration-200"
+                label="descripción"
+                :iconHidden="false" />
             </div>
 
             <div class="mb-4 bg-gray-50 rounded-lg p-3">
@@ -225,7 +185,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import ExpandableText from '@/components/tasks/ExpandableText.vue';
 
 defineProps({
   tasks: {
@@ -235,18 +195,6 @@ defineProps({
 })
 
 defineEmits(['toggle', 'delete', 'edit'])
-
-const expandedDescriptions = ref({})
-
-const expandedTitles = ref({})
-
-const toggleDescription = (taskId) => {
-  expandedDescriptions.value[taskId] = !expandedDescriptions.value[taskId]
-}
-
-const toggleTitle = (taskId) => {
-  expandedTitles.value[taskId] = !expandedTitles.value[taskId]
-}
 
 const formatDate = (dateString) => {
   if (!dateString) return 'N/A'

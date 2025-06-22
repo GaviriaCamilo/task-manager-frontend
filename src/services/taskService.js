@@ -1,13 +1,12 @@
 import axios from 'axios';
-const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
-  baseURL: VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export default {
-  async getTasks() {
-    const res = await api.get('/tasks');
+  async getTasks(params = {}) {
+    const res = await api.get('/tasks', { params });
     return res.data; 
   },
 
@@ -16,23 +15,34 @@ export default {
     return res.data;
   },
 
-  createTask(data) {
-    return api.post('/tasks', data);
+  async createTask(data) {
+    const res = await api.post('/tasks', data);
+    return res.data;
   },
-  
-  updateTask(id, data) {
-    return api.put(`/tasks/${id}`, data);
+
+  async updateTask(id, data) {
+    const res = await api.put(`/tasks/${id}`, data);
+    return res.data;
   },
-  
-  // Método específico para actualizar solo el estado de completado
-  async toggleTaskCompleted(id, isCompleted) {
-    const res = await api.put(`/tasks/${id}`, { 
-      is_completed: isCompleted 
-    });
-    return res.data.task; // Devolver solo la tarea actualizada
+
+  async toggleTaskCompleted(id, is_completed) {
+    const res = await api.put(`/tasks/${id}`, { is_completed });
+    return res.data;
   },
-  
-  deleteTask(id) {
-    return api.delete(`/tasks/${id}`);
+
+  async deleteTask(id) {
+    const res = await api.delete(`/tasks/${id}`);
+    return res.data;
   },
+
+  /**
+   * Llama al backend para generar y descargar un PDF de todas las tareas.
+   * @param {string} searchQuery - Es oppcional, para filtrar las tareas en el PDF.
+   * @returns {Promise<Response>} - La respuesta de Axios conteniendo el blob del PDF.
+   */
+  async exportTasksToPdf(searchQuery = '') {
+    // ¡MUY IMPORTANTE! responseType: 'blob' le dice a Axios que espere un archivo binario.
+    // Esto es crucial para que el navegador sepa cómo manejar el PDF.
+    return await api.get(`/tasks/export-pdf`, { params: { search: searchQuery }, responseType: 'blob' });
+  }
 };

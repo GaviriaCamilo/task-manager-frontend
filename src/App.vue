@@ -1,4 +1,3 @@
-<!-- Este es App.vue -->
 <template>
   <div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100">
     <Header />
