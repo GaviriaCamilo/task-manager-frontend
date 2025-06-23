@@ -197,4 +197,4 @@ Este proyecto está bajo la Licencia MIT - consulta el archivo LICENSE para más
 
 - **Repositorio del Backend**: [Enlace al repositorio del backend] (Añadir el enlace una vez creado)
 - **Repositorio**: https://github.com/GaviriaCamilo/task-manager-frontend
-- **Demo en vivo**: (Próximamente)
+- **Demo en vivo**: https://taskmanagercamilo.netlify.app/
