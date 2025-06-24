@@ -35,14 +35,7 @@ export default {
     return res.data;
   },
 
-  /**
-   * Llama al backend para generar y descargar un PDF de todas las tareas.
-   * @param {string} searchQuery - Es oppcional, para filtrar las tareas en el PDF.
-   * @returns {Promise<Response>} - La respuesta de Axios conteniendo el blob del PDF.
-   */
   async exportTasksToPdf(searchQuery = '') {
-    // ¡MUY IMPORTANTE! responseType: 'blob' le dice a Axios que espere un archivo binario.
-    // Esto es crucial para que el navegador sepa cómo manejar el PDF.
     return await api.get(`/tasks/export-pdf`, { params: { search: searchQuery }, responseType: 'blob' });
   }
 };

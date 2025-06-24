@@ -87,7 +87,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '@/services/taskService' 
+import taskService from '@/services/taskService' 
 import TaskTable from '@/components/tasks/TaskTable.vue'
 import ModalCreateTask from '@/components/tasks/ModalTask.vue'
 import ModalDeleteTask from '@/components/tasks/ModalDeleteTask.vue'
@@ -135,7 +135,7 @@ const loadTasks = async () => {
     if (searchQuery.value) {
       params.search = searchQuery.value 
     }
-    const response = await api.getTasks(params)
+    const response = await taskService.getTasks(params)
     tasks.value = response.data.map(task => ({
       ...task,
       updating: false,
@@ -191,19 +191,18 @@ const handleEditTask = (task) => {
   showModal.value = true
 }
 
-
 const handleSubmit = async (data) => {
   try {
     modalLoading.value = true
     if (modalMode.value === 'create') {
-      await api.createTask(data)
+      await taskService.createTask(data)
       showToast('Tarea creada correctamente', 'success')
     } else {
-      await api.updateTask(currentTaskId.value, data)
+      await taskService.updateTask(currentTaskId.value, data)
       showToast('Tarea actualizada correctamente', 'success')
     }
     showModal.value = false
-    await loadTasks() // Recarga las tareas después de crear/actualizar
+    await loadTasks() 
   } catch (error) {
     showToast(`Error al ${modalMode.value === 'create' ? 'crear' : 'actualizar'} la tarea`, 'error')
     console.error(`Error al ${modalMode.value === 'create' ? 'crear' : 'actualizar'} tarea:`, error);
@@ -222,8 +221,7 @@ const handleToggleTask = async (task) => {
     const originalIsCompleted = task.is_completed;
     tasks.value[index].is_completed = !originalIsCompleted; 
 
-    // Llama a la API para actualizar el estado
-    const response = await api.toggleTaskCompleted(task.id, !originalIsCompleted);
+    const response = await taskService.toggleTaskCompleted(task.id, !originalIsCompleted);
     showToast(`Tarea ${response.task.is_completed ? 'completada' : 'pendiente'} correctamente`, 'success');
     
     await loadTasks(); 
@@ -244,19 +242,18 @@ const handleDeleteTask = (id) => {
   showDeleteModal.value = true
 }
 
-// Elimina la tarea seleccionada y actualiza la lista
 const confirmDelete = async () => {
   const index = tasks.value.findIndex(t => t.id === taskIdToDelete.value)
   if (index === -1) return
   try {
     tasks.value[index].deleting = true
-    await api.deleteTask(taskIdToDelete.value)
+    await taskService.deleteTask(taskIdToDelete.value)
     showToast('Tarea eliminada correctamente', 'success')
     // Si la última tarea en una página se elimina, ir a la página anterior si es posible
     if (tasks.value.length === 1 && currentPage.value > 1) { 
       currentPage.value--;
     }
-    await loadTasks(); // Recarga las tareas después de eliminar para asegurar la paginación correcta.
+    await loadTasks(); 
   } 
   catch (error) {
     showToast('Error al eliminar la tarea', 'error')
@@ -268,43 +265,33 @@ const confirmDelete = async () => {
   }
 }
 
-// Muestra un toast temporal
 const showToast = (message, type = 'info') => {
   toast.value = { show: true, message, type }
   setTimeout(() => { toast.value.show = false }, 3000)
 }
 
-/**
- * Maneja la exportación de tareas a PDF.
- * Llama al backend para obtener el archivo PDF y lo descarga en el navegador.
- */
 const exportPdf = async () => {
   try {
-    const response = await api.exportTasksToPdf(searchQuery.value);
+    const response = await taskService.exportTasksToPdf(searchQuery.value);
     
     // Crear un objeto URL para el Blob (archivo binario) recibido
     const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-    const link = document.createElement('a'); // Crear un elemento 'a' temporal en el DOM
+    const link = document.createElement('a');
     link.href = url;
-    // Establecer el nombre del archivo. Date.now() asegura un nombre único.
     link.setAttribute('download', `listado_tareas_${Date.now()}.pdf`); 
-    document.body.appendChild(link); // Añadir el enlace al DOM (necesario para que .click() funcione)
+    document.body.appendChild(link); 
     link.click(); 
     link.remove();
-    window.URL.revokeObjectURL(url); // Liberar el objeto URL para liberar memoria del navegador
+    window.URL.revokeObjectURL(url);
     
     showToast('PDF generado y descargado correctamente', 'success');
   } 
   catch (error) {
     showToast('Error al generar el PDF', 'error');
     console.error('Error al exportar PDF:', error);
-    // Opcional: Si el backend devuelve un error con un cuerpo JSON, intenta leerlo.
     if (error.response && error.response.data instanceof Blob) {
-        // Si la respuesta de error es un blob (ej. error 500 HTML), puedes intentar leerlo como texto.
-        // Esto es útil si tu API devuelve un mensaje de error HTML en lugar de un PDF.
         error.response.data.text().then(text => console.error('Detalle del error del backend (texto):', text));
     } else if (error.response && error.response.data) {
-        // Para errores JSON normales de la API
         console.error('Detalle del error del backend (JSON):', error.response.data);
     }
   }
