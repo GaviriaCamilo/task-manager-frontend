@@ -77,10 +77,13 @@ Aquí puedes ver algunas capturas de pantalla de la aplicación en funcionamient
 
 ### Vista de Escritorio (Desktop)
 
+* **Página Principal (lighthouse Report):**
+    ![Lighthouse Report](screenshots/lighthouse_report.png)
+
 * **Página Principal (Listado de Tareas):**
     ![Pantalla Principal Escritorio](screenshots/homedesktop.png)
 
-    * **Página "About":**
+* **Página "About":**
     ![Pantalla About Escritorio](screenshots/aboutdesktop.png)
 
 ### Vista Móvil (Mobile)
